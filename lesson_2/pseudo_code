@@ -1,0 +1,65 @@
+# 1. a method that returns the sum of two integers
+
+#Casual
+
+-Define a method named add that takes two integers
+-Add the two integers together
+-Add two integer variables
+-End method
+-Greet user
+-Ask user for two integers, store each into a variable, num_one, num_two, while converting those to integers
+-Call the add method on the two variables and store that into a result variable
+-Print out the result for the user
+
+#Formal
+
+START
+
+#Given two integers, called number_one and number_two
+SET a method named add that takes two arguments, defined by parameters called number_one and number_two
+Add number_one converted to an integer + number_two converted to an integer
+End method here so the result of the addition will be implicitly returned
+
+GET number_one from user and save into number_one variable
+GET number_two from user and save into number_two variable
+
+SET result variable = Calling add method on number_one, number_two variables
+PRINT result to user
+
+END of program
+
+#2. a method that takes an array of strings, and returns a string that is all those strings
+concatenated together
+
+#Casual
+
+-Define a method named concat that takes an array of strings called array
+-Call the join method on array while passing it a - delimiter to concatenate with a - between
+each word
+-End method
+
+-Print the result of calling the concat method on an array of strings
+
+#Formal
+
+START
+
+#Given an array of strings called array
+SET a method named concat that takes an array parameter called array
+Call join('-') on array
+End method
+
+SET input_array = []
+Ask the user what group of words they would like to join together
+SET input = user input
+Push the input into input_array array
+SET result = calling concat method on input_array
+PRINT result of that call
+
+END
+
+
+
+
+
+
