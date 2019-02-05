@@ -1,0 +1,76 @@
+#1
+flintstones = ["Fred", "Barney", "Wilma", "Betty", "Pebbles", "BamBam"]
+
+hash = {}
+
+flintstones.each_with_index do |character, index|
+  hash[character] = index
+end
+
+puts hash
+
+#2
+total_ages = 0
+ages.each { |_,age| total_ages += age }
+total_ages
+
+#3
+ages.keep_if { |key, value| value < 100 }
+
+#4
+ages.values.min
+
+#5
+flintstones = %w(Fred Barney Wilma Betty BamBam Pebbles)
+
+flintstones.bsearch_index { |name| name.start_with?('Be') }
+
+#6
+flintstones = %w(Fred Barney Wilma Betty BamBam Pebbles)
+
+flintstones.map! { |name| name[0, 3] }
+
+#7
+statement = "The Flintstones Rock"
+frequency = {}
+
+statement.split(//).each do |letter|
+  if frequency.has_key?(letter)
+    frequency[letter] += 1
+  else
+    frequency[letter] = 1
+  end
+end
+
+puts frequency
+
+#8
+Part one: 1
+          3
+Part two: 1
+          2
+This shows that we are modifying the original array during each iteration.
+
+#9
+movie = 'the little mermaid'.split(' ').each { |word| word.capitalize! }.join(' ')
+
+#10
+def age_group(age)
+  case
+  when age <= 18
+    'kid'
+  when age <= 64
+    'adult'
+  when age > 64
+    'senior'
+  end
+end
+
+munsters.map do |key, value|
+  age = value['age']
+  value['age range'] = age_group(age)
+end
+
+puts munsters
+
+

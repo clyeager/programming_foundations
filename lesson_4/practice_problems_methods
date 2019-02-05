@@ -1,0 +1,39 @@
+#1
+'hi' is the return value because it is the last evaluated expression
+
+#2
+Count treats the block's return value based on its truthiness, so it will only count an element
+if the return value is true. In this case it returns 2 because there are two string elements who have truthy block return values.
+
+#3
+[1, 2, 3] is the return value because puts num will always evaluate to nil. Since reject returns all the elements who have a falsey block return value, it will return all the original values.
+
+#4
+{ "a" => "ant", "b" => "bear", "c" => "cat" }
+This is because after all iterating is done, the original object passed in ({}) is returned, which
+now contains all thew new information.
+
+#5
+[:a, 'ant']
+We can go to the hash class and see that the shift method removes the first key,value pair from the hash and returns it as a two item array [key, value].
+
+#6
+The return value is 11 because .pop returns the element(the last one in the array) that it removes from the array. Calling .size on 'catepillar' then results in 11.
+
+#7
+The return value of the block will be a boolean on each iteration, and the return value of .any? will be true because 1 is odd and will return true, so .any? will stop here and return true.
+
+#8
+Take returns first n elements, so in this case returns the first 2 elements into a new array, which is [1, 2]. This is not destructive, which can be seen when we inspect our original array.
+
+#9
+[nil, 'bear']
+This is the return value because the if condition evaluates to nil with the first element since none of the conditions evaluate to true, but returns bear because it is greater than 3, therefore it evaluates as true.
+
+#10
+[1, nil, nil]
+This is the return value because the first condition runs the else statement, which returns itself, and the last two evaluate to true during the if statement, so puts num is returned, which is always nil.
+
+
+
+
