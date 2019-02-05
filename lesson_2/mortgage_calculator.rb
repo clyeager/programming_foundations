@@ -12,63 +12,55 @@ end
 prompt(MESSAGES['welcome'])
 
 loop do
-
-loan = ''
-loop do
-  prompt(MESSAGES['loan'])
-  loan = gets.chomp
-  if valid_number(loan)
-    loan = loan.to_i
-    break
-  else
-    prompt(MESSAGES['loan_warning'])
-  end
-end
-
-monthly_rate = ''
-loop do
-  prompt(MESSAGES['apr'])
-  apr = gets.chomp
-  if valid_number(apr)
-    monthly_rate = apr.to_f / 12 / 100
-    break
-  else
-    prompt(MESSAGES['apr_warning'])
-  end
-end
-
-duration = ''
-loop do
-  prompt(MESSAGES['duration'])
-  duration = gets.chomp
-  if valid_number(duration)
-    prompt(MESSAGES['duration_term'])
-    answer = gets.chomp
-    if answer.downcase == 'months'
-      duration = duration.to_f
+  loan = ''
+  loop do
+    prompt(MESSAGES['loan'])
+    loan = gets.chomp
+    if valid_number(loan)
+      loan = loan.to_i
       break
-    elsif answer.downcase == 'years'
-      duration = duration.to_f * 12
-      break
+    else
+      prompt(MESSAGES['loan_warning'])
     end
-  else
-    prompt(MESSAGES['duration_warning'])
   end
-end
 
-result = loan * (monthly_rate / (1 - (1 + monthly_rate)**(-duration)))
-prompt "Your monthly payment will be $#{result.ceil}."
-prompt(MESSAGES['again'])
+  monthly_rate = ''
+  loop do
+    prompt(MESSAGES['apr'])
+    apr = gets.chomp
+    if valid_number(apr)
+      monthly_rate = apr.to_f / 12 / 100
+      break
+    else
+      prompt(MESSAGES['apr_warning'])
+    end
+  end
 
-answer = gets.chomp
-break if answer.downcase.start_with?('n')
+  duration = ''
+  loop do
+    prompt(MESSAGES['duration'])
+    duration = gets.chomp
+    if valid_number(duration)
+      prompt(MESSAGES['duration_term'])
+      answer = gets.chomp
+      if answer.downcase == 'months'
+        duration = duration.to_f
+        break
+      elsif answer.downcase == 'years'
+        duration = duration.to_f * 12
+        break
+      end
+    else
+      prompt(MESSAGES['duration_warning'])
+    end
+  end
 
+  result = loan * (monthly_rate / (1 - (1 + monthly_rate)**-duration))
+  prompt "Your monthly payment will be $#{result.ceil}."
+  prompt(MESSAGES['again'])
+
+  answer = gets.chomp
+  break if answer.downcase.start_with?('n')
 end
 
 prompt(MESSAGES['exit'])
-
-
-
-
-
-
