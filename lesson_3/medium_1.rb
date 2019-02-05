@@ -11,9 +11,9 @@ or puts "the valiue of 40 + 2 is " + (40+2).to_s
 def factors(number)
   divisor = number
   factors = []
-while divisor > 0 do
-  factors << number / divisor if number % divisor == 0
-  divisor -= 1
+  while divisor > 0 do
+    factors << number / divisor if number % divisor == 0
+    divisor -= 1
   end
   factors
 end
@@ -31,12 +31,12 @@ Bonus 2. this is the return value because it is the last line of code executed
 Using the buffer = input_array + [new_element] is creating a new array called buffer,
  not modifying existing input_array like buffer << new_element does
 
- #5
- The problem is that the method can not see the local varialbe called limit because it was
- initialized outside of the method. This is fixed by putting the limit variable in the method like so:
+#5
+The problem is that the method can not see the local varialbe called limit because it was
+initialized outside of the method. This is fixed by putting the limit variable in the method like so:
 
 def fib(first_num, second_num)
-limit = 15
+  limit = 15
   while first_num + second_num < limit
     sum = first_num + second_num
     first_num = second_num

@@ -24,5 +24,5 @@ def dot_separated_ip_address?(input_string)
     word = dot_separated_words.pop
     return true if is_an_ip_number?(word)
   end
-    false
+  false
 end
