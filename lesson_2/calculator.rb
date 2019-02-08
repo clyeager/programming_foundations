@@ -107,4 +107,4 @@ loop do # main loop
   break unless answer.downcase.start_with?('y')
 end
 
-prompt("Thank you for using the calculator!")
+prompt("Thank you for using the calculator!") 

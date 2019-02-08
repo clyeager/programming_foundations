@@ -233,7 +233,7 @@ Lint/LiteralInInterpolation:
   AutoCorrect: false
   Enabled: true
 
-##################### Performance ##################################
+##################### Performance ################################## 
 
 Performance/Casecmp:
   Description: 'Use `casecmp` rather than `downcase ==`.'

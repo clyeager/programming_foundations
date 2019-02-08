@@ -56,7 +56,7 @@ Push the input into input_array array
 SET result = calling concat method on input_array
 PRINT result of that call
 
-END
+END 
 
 
 
