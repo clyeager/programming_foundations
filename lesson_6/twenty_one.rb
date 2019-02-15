@@ -122,7 +122,7 @@ def play_again?
   loop do
     prompt "Keep going?"
     answer = gets.chomp.downcase
-    break if answer.start_with?('y') || answer.start_with?('n')
+    break if answer.start_with?('y', 'n')
   end
   answer.downcase.start_with?('y')
 end
