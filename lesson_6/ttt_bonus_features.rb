@@ -173,11 +173,8 @@ loop do
 
   loop do
     display_board(board)
-
     place_piece!(board, current_player)
-
     break if someone_won?(board) || board_full?(board)
-
     current_player = alternate_player(current_player)
   end
 

@@ -82,8 +82,8 @@ def final_results(player_cards, dealer_cards, player_total, dealer_total)
   winner = who_won(player_total, dealer_total)
   case winner
   when 'player'
-    prompt "Congratulations player, you won with #{player_cards.join('-')} totalling " \
-           "#{player_total}! Dealer cards: #{dealer_cards.join('-')} Total: #{dealer_total}"
+    prompt "Congratulations player, you won with #{player_cards.join('-')}" \
+    "totalling #{player_total}! Dealer cards: #{dealer_cards.join('-')} Total: #{dealer_total}"
   when 'dealer'
     prompt "Sorry player, the dealer won with #{dealer_cards.join('-')}" \
            " totalling #{dealer_total}!"
@@ -107,21 +107,47 @@ def grand_champ(player_wins, dealer_wins)
   nil
 end
 
+def display_champ(champ)
+  puts ''
+  prompt "Congratulations! #{champ.capitalize} you are" \
+         "the grand champion with 5 wins!"
+end
+
+def reset_wins
+  0
+end
+
 def play_again?
-  prompt "Keep going?"
-  answer = gets.chomp
+  answer = nil
+  loop do
+    prompt "Keep going?"
+    answer = gets.chomp.downcase
+    break if answer.start_with?('y') || answer.start_with?('n')
+  end
   answer.downcase.start_with?('y')
 end
 
+def space
+  puts ''
+end
+
+# start
 system 'clear'
 prompt "Welcome to Twenty-One!"
-prompt "First to win 5 games is the grand chamnpion!"
-puts ''
+prompt "First to win 5 games is the grand champion!"
+puts '*' * 47
 
+# start with no wins and no champion
 player_wins = 0
 dealer_wins = 0
+champ = nil
 
 loop do
+  # reset the wins variables if there is a champion
+  if champ
+    player_wins, dealer_wins = reset_wins
+  end
+  # initialize a new deck, deal each player two cards, calculate initial total
   new_deck = initialize_deck
 
   player_cards = deal_cards(new_deck, INITIAL_DEAL)
@@ -130,74 +156,84 @@ loop do
   dealer_cards = deal_cards(new_deck, INITIAL_DEAL)
   dealer_total = cards_total(dealer_cards)
 
+  # player_turn
   loop do
     break if busted?(cards_total(player_cards))
+    space
     show_hand(player_cards, player_total, dealer_cards)
-    puts ''
+    space
     prompt "Would you like to hit or stay?"
     answer = gets.chomp.downcase
-    break if answer == 'stay'
-    puts ''
-    if answer == 'hit'
-      sleep(2)
+    break if answer.start_with?('s')
+    space
+    if answer.start_with?('h')
+      sleep(1)
       player_cards = deal_cards(new_deck, HIT, player_cards)
       player_total = cards_total(player_cards)
+    else
+      prompt 'Please enter a valid option!'
     end
   end
 
-  loop do
-    if busted?(player_total)
-      prompt "Your hand is #{player_cards.join('-')} Total: #{player_total}" \
-             " Sorry-Busted!"
-      puts ''
-      prompt "Dealer's cards were #{dealer_cards.join('-')}!"
-      dealer_wins = add_a_win(dealer_wins)
-      break
-    else
-      puts ''
-    end
-
-    loop do
-      prompt "Dealer's turn: hit or stay?"
-      sleep(3)
-      puts ''
-      dealer_turn = dealer_turn(dealer_total)
-      prompt "The dealer has decided to #{dealer_turn}."
-      puts ''
-      sleep(3)
-      break if dealer_turn == 'stay'
-
-      dealer_cards = deal_cards(new_deck, HIT, dealer_cards)
-      dealer_total = cards_total(dealer_cards)
-    end
-
-    if busted?(dealer_total)
-      prompt "Dealer has busted! Dealer cards: #{dealer_cards.join('-')} " \
-             "Total: #{dealer_total}; You win!!!"
-      player_wins = add_a_win(player_wins)
-    else
-      # rubocop:disable Metrics/LineLength
-      final_results(player_cards, dealer_cards, player_total, dealer_total)
-      player_wins = add_a_win(player_wins) if who_won(player_total, dealer_total) == 'player'
-      dealer_wins = add_a_win(dealer_wins) if who_won(player_total, dealer_total) == 'dealer'
-      # rubocop:enable Metrics/LineLength
-    end
-    break
-  end
-
-  puts ''
-  champ = grand_champ(player_wins, dealer_wins)
-  if champ
-    prompt "Congratulations! #{champ.capitalize} you are the grand champion!"
-    player_wins = 0
-    dealer_wins = 0
+  # handle conditions of player_turn
+  if busted?(player_total)
+    prompt "Your hand is #{player_cards.join('-')} Total: #{player_total}" \
+           " Sorry-Busted!"
+    space
+    prompt "Dealer's cards were #{dealer_cards.join('-')}!"
+    dealer_wins = add_a_win(dealer_wins)
+    # check for a champion
+    champ = grand_champ(player_wins, dealer_wins)
+    display_champ(champ) if champ
+    space
     next if play_again?
     break
+  else
+    space
   end
 
+  # dealer_turn
+  loop do
+    break if busted?(dealer_total)
+    prompt "Dealer's turn: hit or stay?"
+    sleep(3)
+    space
+    dealer_turn = dealer_turn(dealer_total)
+    prompt "The dealer has decided to #{dealer_turn}."
+    sleep(3)
+    break if dealer_turn == 'stay'
+    space
+    dealer_cards = deal_cards(new_deck, HIT, dealer_cards)
+    dealer_total = cards_total(dealer_cards)
+  end
+
+  # handle conditions of dealer_turn
+  if busted?(dealer_total)
+    prompt "Dealer has busted! Dealer cards: #{dealer_cards.join('-')} " \
+           "Total: #{dealer_total}; You win!!!"
+    player_wins = add_a_win(player_wins)
+    # check for champion
+    champ = grand_champ(player_wins, dealer_wins)
+    display_champ(champ) if champ
+    space
+    next if play_again?
+    break
+  else
+    space
+  end
+  # handle condition neither party has busted
+  # rubocop:disable Metrics/LineLength
+  final_results(player_cards, dealer_cards, player_total, dealer_total)
+  player_wins = add_a_win(player_wins) if who_won(player_total, dealer_total) == 'player'
+  dealer_wins = add_a_win(dealer_wins) if who_won(player_total, dealer_total) == 'dealer'
+  # rubocop:enable Metrics/LineLength
+  # check for champion
+  champ = grand_champ(player_wins, dealer_wins)
+  display_champ(champ) if champ
+  space
   next if play_again?
   break
 end
 
-puts ''
+space
 prompt "Thank you for playing. Goodbye!"
