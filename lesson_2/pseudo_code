@@ -3,7 +3,6 @@
 #Casual
 
 -Define a method named add that takes two integers
--Add the two integers together
 -Add two integer variables
 -End method
 -Greet user
@@ -34,7 +33,7 @@ concatenated together
 #Casual
 
 -Define a method named concat that takes an array of strings called array
--Call the join method on array while passing it a - delimiter to concatenate with a - between
+-Call the join method on array while passing it a ' ' delimiter to concatenate with a space between
 each word
 -End method
 
@@ -45,8 +44,8 @@ each word
 START
 
 #Given an array of strings called array
-SET a method named concat that takes an array parameter called array
-Call join('-') on array
+Define a method named concat that takes an array parameter called array
+Call join(' ') on array
 End method
 
 SET input_array = []
@@ -56,10 +55,29 @@ Push the input into input_array array
 SET result = calling concat method on input_array
 PRINT result of that call
 
-END 
+END of program
 
+#3. a method that takes an array of integers, returns new array with every other element
 
+#Casual
 
+-Given an array of integers
+-Create a method that takes an array argument
+-Iterate over the array, keeping track of index
+-Return a new array that contains the integers of the even indices
+-End method
+
+#Formal
+
+START
+
+Given an array of integers in a variable called integers
+Define a method called even_index_array that takes an array argument
+SET a variable called result = empty array
+Iterate over given integer array using each_with_index method |n, idx|
+Push the n integer to the result array if the idx is even, using the even? method
+After all iterations are over, return result variable
+END method
 
 
 
