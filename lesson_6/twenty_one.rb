@@ -28,7 +28,7 @@ def show_hand(player_cards, player_total, dealer_cards)
 end
 
 def initialize_deck
-  new_deck = Marshal.load( Marshal.dump(DECK) )
+  Marshal.load(Marshal.dump(DECK))
 end
 
 def remove_from_deck(deck, suit, card)
@@ -142,7 +142,8 @@ champ = nil
 loop do
   # reset the wins variables if there is a champion
   if champ
-    player_wins, dealer_wins = 0, 0
+    player_wins = 0
+    dealer_wins = 0
     champ = nil
   end
   # initialize a new deck, deal each player two cards, calculate initial total
