@@ -28,7 +28,7 @@ def show_hand(player_cards, player_total, dealer_cards)
 end
 
 def initialize_deck
-  DECK.dup
+  new_deck = Marshal.load( Marshal.dump(DECK) )
 end
 
 def remove_from_deck(deck, suit, card)
@@ -83,9 +83,9 @@ def final_results(player_cards, dealer_cards, player_total, dealer_total)
   case winner
   when 'player'
     prompt "Congratulations player, you won with #{player_cards.join('-')}" \
-    "totalling #{player_total}! Dealer cards: #{dealer_cards.join('-')} Total: #{dealer_total}"
+    " totalling #{player_total}! Dealer cards: #{dealer_cards.join('-')} Total: #{dealer_total}"
   when 'dealer'
-    prompt "Sorry player, the dealer won with #{dealer_cards.join('-')}" \
+    prompt "Sorry player, the dealer won with #{dealer_cards.join('-')}," \
            " totalling #{dealer_total}!"
   when 'tie'
     prompt "It's a tie! Dealer has #{dealer_cards.join('-')}, and player has " \
@@ -109,12 +109,9 @@ end
 
 def display_champ(champ)
   puts ''
-  prompt "Congratulations! #{champ.capitalize} you are" \
-         "the grand champion with 5 wins!"
-end
-
-def reset_wins
-  0
+  puts "*** Congratulations! #{champ.capitalize} you are " \
+         "the grand champion with 5 wins! ***"
+  sleep(2)
 end
 
 def play_again?
@@ -145,7 +142,8 @@ champ = nil
 loop do
   # reset the wins variables if there is a champion
   if champ
-    player_wins, dealer_wins = reset_wins
+    player_wins, dealer_wins = 0, 0
+    champ = nil
   end
   # initialize a new deck, deal each player two cards, calculate initial total
   new_deck = initialize_deck
@@ -158,7 +156,7 @@ loop do
 
   # player_turn
   loop do
-    break if busted?(cards_total(player_cards))
+    break if busted?(player_total)
     space
     show_hand(player_cards, player_total, dealer_cards)
     space
